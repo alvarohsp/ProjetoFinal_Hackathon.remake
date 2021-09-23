@@ -14,13 +14,11 @@ public class UsuarioRetorno {
     private Integer idade;
     private Integer tipo;
 
-    public UsuarioRetorno(long id, String name, String email, Integer idade, String formacao, Integer tipo){
+    public UsuarioRetorno(long id, String name, String email, Integer idade){
         this.id = id;
         this.nome = name;
         this.email = email;
         this.idade = idade;
-        this.formacao = formacao;
-        this.tipo = tipo;
     }
 
     public UsuarioRetorno(){
@@ -59,19 +57,19 @@ public class UsuarioRetorno {
         this.email = email;
     }
 
-    public String getFormacao() {
-        return formacao;
-    }
-
-    public void setFormacao(String formacao) {
-        this.formacao = formacao;
-    }
-
-    public Integer getIdade() {
-        return idade;
-    }
-
-    public void setIdade(Integer idade) {
-        this.idade = idade;
-    }
+//    public String getFormacao() {
+//        return formacao;
+//    }
+//
+//    public void setFormacao(String formacao) {
+//        this.formacao = formacao;
+//    }
+//
+//    public Integer getIdade() {
+//        return idade;
+//    }
+//
+//    public void setIdade(Integer idade) {
+//        this.idade = idade;
+//    }
 }

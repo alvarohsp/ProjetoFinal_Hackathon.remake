@@ -1,5 +1,6 @@
 package com.github.alvarohsp.recursos;
 
+import com.github.alvarohsp.entidades.Professor;
 import com.github.alvarohsp.repositorios.ProfessorRepositorio;
 import com.github.alvarohsp.entidades.Usuario;
 
@@ -25,7 +26,7 @@ public class ProfessorRecurso {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserById(@PathParam("id") long id){
-        return repository.getAdminById(id);
+        return repository.getProfById(id);
 
     }
 
@@ -33,7 +34,7 @@ public class ProfessorRecurso {
     @Transactional
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addUser(Usuario user){
-        return repository.addAdmin(user);
+    public Response addUser(Professor professor){
+        return repository.addProf(professor);
     }
 }

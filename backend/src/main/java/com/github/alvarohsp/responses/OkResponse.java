@@ -1,10 +1,11 @@
 package com.github.alvarohsp.responses;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
 @RegisterForReflection
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OkResponse<T> extends ResponseEntity {
 
     private T data;

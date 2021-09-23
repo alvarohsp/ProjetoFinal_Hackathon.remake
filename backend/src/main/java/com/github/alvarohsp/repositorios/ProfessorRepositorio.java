@@ -1,7 +1,9 @@
 package com.github.alvarohsp.repositorios;
 
-import com.github.alvarohsp.entidades.Usuario;
+import com.github.alvarohsp.entidades.Professor;
 import com.github.alvarohsp.entidades.UsuarioRetorno;
+import com.github.alvarohsp.responses.NotFoundResponse;
+import com.github.alvarohsp.responses.OkResponse;
 import com.github.alvarohsp.utilitarios.Criptografia;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -13,9 +15,9 @@ import java.util.Optional;
 @ApplicationScoped
 public class ProfessorRepositorio {
 
-    public Response addAdmin(Usuario user) {
+    public Response addProf(Professor user) {
 
-        Optional<Usuario> buscarUser = Usuario.find("email", user.getEmail())
+        Optional<Professor> buscarUser = Professor.find("email", user.getEmail())
                 .singleResultOptional();
 
         if (buscarUser.isPresent()) {
@@ -25,7 +27,7 @@ public class ProfessorRepositorio {
         user.setSenha(Criptografia.criptografarSenha(user.getSenha()));
         user.setTipo(1);
 
-        Usuario.persist(user);
+        Professor.persist(user);
         if (user.isPersistent()) {
             return Response.status(201).entity("Usuario Administrador: " + user.getNome() + " criado com sucesso.").build();
         }
@@ -34,31 +36,19 @@ public class ProfessorRepositorio {
     }
 
     public Response getAll(){
-        List<Usuario> users = Usuario.list("SELECT m FROM Usuario m WHERE m.tipo = 1 ORDER BY id ASC");
-        List<UsuarioRetorno> usersFront = new ArrayList<UsuarioRetorno>();
-        for(Usuario u : users){
-            usersFront.add(new UsuarioRetorno(u.id, u.getNome(), u.getEmail(), u.getIdade(), u.getFormacao(), u.getTipo()));
-        }
-        return Response.ok(usersFront).build();
+        List<Professor> users = Professor.list("SELECT m FROM Professor m WHERE m.tipo = 1 ORDER BY id ASC");
+
+        return Response.ok(new OkResponse<>(users)).build();
     }
 
-    public Response getAdminById(long id){
-        Optional<Usuario> buscaUser = Usuario.find("id", id)
+    public Response getProfById(long id){
+        Optional<Professor> buscaUser = Professor.find("id", id)
                 .singleResultOptional();
 
         if (buscaUser.isEmpty() || buscaUser.get().getTipo() != 1) {
-            return Response.status(404).entity("Não existe usuario Administrador com o id: " + id).build();
+            return Response.status(404).entity(new NotFoundResponse()).build();
         }
 
-
-        UsuarioRetorno userFront = new UsuarioRetorno(
-                buscaUser.get().id,
-                buscaUser.get().getNome(),
-                buscaUser.get().getEmail(),
-                buscaUser.get().getIdade(),
-                buscaUser.get().getFormacao(),
-                buscaUser.get().getTipo());
-
-        return Response.ok(userFront).build();
+        return Response.ok(buscaUser.get()).build();
     }
 }

@@ -1,5 +1,6 @@
 package com.github.alvarohsp.recursos;
 
+import com.github.alvarohsp.entidades.Aluno;
 import com.github.alvarohsp.entidades.Usuario;
 import com.github.alvarohsp.auth.Authorize;
 import com.github.alvarohsp.repositorios.AlunoRepositorio;
@@ -32,7 +33,7 @@ public class AlunoRecurso {
 
     @GET
     @Path("permit-all")
-    @Authorize
+//    @Authorize
     @Produces(MediaType.APPLICATION_JSON)
     public String hello(@Context HttpHeaders ctx){
         String token = ctx.getHeaderString(HttpHeaders.AUTHORIZATION).substring("Bearer".length()).trim();
@@ -48,7 +49,7 @@ public class AlunoRecurso {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserById(@PathParam("id") long id){
-        return repository.getUserById(id);
+        return repository.getAlunoById(id);
 
     }
 
@@ -56,7 +57,7 @@ public class AlunoRecurso {
     @Transactional
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addUser(Usuario user){
-        return repository.addUser(user);
+    public Response addUser(Aluno aluno){
+        return repository.addAluno(aluno);
     }
 }
